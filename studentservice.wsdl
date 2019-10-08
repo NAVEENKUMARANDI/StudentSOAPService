@@ -1,0 +1,43 @@
+<definitions name="StudentService" targetNamespace="http://www.steepsouth.com/wsdl/StudentService.wsdl" 
+  xmlns="http://schemas.xmlsoap.org/wsdl/" 
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+  xmlns:tns="http://www.steepsouth.com/wsdl/StudentService.wsdl" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <message name="getStudentRequest">
+    <part name="studentId" type="xsd:string"/>
+  </message>
+
+  <message name="getStudentResponse">
+    <part name="studentId" type="xsd:string"/>
+    <part name="firstName" type="xsd:string"/>
+    <part name="lastName" type="xsd:string"/>
+  </message>
+
+  <portType name="Student_PortType">
+    <operation name="getStudentList">
+      <input message="tns:getStudentRequest"/>
+      <output message="tns:getStudentResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="Student_Binding" type="tns:Student_PortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getStudentList">
+      <soap:operation soapAction="getStudentList"/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:steepsouth:studentservice" use="encoded"/>
+      </input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:steepsouth:studentservice" use="encoded"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="Student_Service">
+    <documentation>WSDL File for StudentService</documentation>
+    <port binding="tns:Student_Binding" name="Student_Port">
+      <soap:address location="http://localhost:3150/studentsoapservice/" />
+    </port>
+  </service>
+</definitions>
